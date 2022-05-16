@@ -21,9 +21,6 @@ class GetFlights extends Controller {
 			$result = response()->json(['Success'=>false,'Msg'=>$validator->messages()],400);
 			return $result;
 		} else {
-			$weekday = getdate(date("U"));
-			//$weekday = $weekday['weekday'];
-			return $weekday;
 			$flights = DB::table('flight_masters as a')
 			->join('flight_schedules as b','a.id','=','b.flightid')
 			->where(strtolower('a.location'),strtolower($RequestData['to']))
