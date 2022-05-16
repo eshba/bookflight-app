@@ -21,8 +21,6 @@ class GetFlights extends Controller {
 			$result = response()->json(['Success'=>false,'Msg'=>$validator->messages()],400);
 			return $result;
 		} else {
-			$query = DB::table('flight_bookings as a')->selectRaw("a.id")->where([['a.bookingprice','<',3000],['a.isconfirmed',1]])->whereRaw("(hour(now()) - hour(a.booked_at)) >= 3")->limit(1)->orderBy('a.seat')->get();
-			return $query;
 			$flights = DB::table('flight_masters as a')
 			->join('flight_schedules as b','a.id','=','b.flightid')
 			->where(strtolower('a.location'),strtolower($RequestData['to']))

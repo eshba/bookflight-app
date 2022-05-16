@@ -16,9 +16,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        
 		$schedule->call(function() {
-			$query = DB::table('flight_bookings as a')->select('a.id')->where([['a.bookingprice','<',3000],['a.isconfirmed',1]])->limit(1)->orderBy('a.seat')->get();
+			$query = DB::table('flight_bookings as a')->select('a.id')->where([['a.bookingprice','<',3000],['a.isconfirmed',1]])->whereRaw("(hour(now()) - hour(a.booked_at)) >= 3")->limit(1)->orderBy('a.seat')->get();
 			DB::table('flight_bookings as a')->where('a.id',$query[0]->id)->update(['a.isconfirmed'=>0]);
 		})->everyMinute();
     }

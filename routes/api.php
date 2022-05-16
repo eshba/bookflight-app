@@ -26,3 +26,5 @@ Route::post('passenger/register','Passenger\AddPassenger@addPassenger');
 
 
 Route::post('passenger/bookflight','Passenger\BookFlights@bookFlights');
+
+Route::patch('passenger/confirmflight','Passenger\ConfirmFlights@confirm');
