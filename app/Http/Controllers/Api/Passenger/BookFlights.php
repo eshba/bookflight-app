@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use DB;
+use PDF;
 
 class BookFlights extends Controller {
 	
@@ -77,8 +78,11 @@ class BookFlights extends Controller {
 			}
 			
 			DB::table('flight_schedules as b')->where('b.id',$flightid)->update(['b.vacantseats' => $bookingData[0]->AvailableSeats-1]);
-			$result = response()->json(['Success'=>true,'Msg'=>$msg],200);
-			return $result;
+			$result = ['Success'=>'true','Msg'=>$msg];
+			$pdf = PDF::loadView('pdf',$result);
+			
+			//$result = response()->json(['Success'=>true,'Msg'=>$msg],200);
+			return $pdf->download('ticket.pdf');
 		}
 	}
 }
