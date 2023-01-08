@@ -18,4 +18,15 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_the_application_list_flights_api_returns_a_successful_response()
+    {
+        $response = $this->getJson("/api/flights/list?to=Kolkata&isreturn=1&day=Tuesday");
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                "Success" => true,
+            ]);
+    }
 }
